@@ -28,7 +28,7 @@ import {
   State,
   resetState,
   useContext,
-  // useTemporalStore,
+  useTemporalStore,
 } from "../store.js";
 import { ContextMenu, Click as ContextMenuClick } from "./ContextMenu.js";
 import { EdgeTypes } from "./EdgeTypes.js";
@@ -38,7 +38,7 @@ import { PlusMenu } from "./PlusMenu.js";
 import { Toolbar } from "./Toolbar.js";
 
 export default function Graph() {
-  const useStore = useContext();
+  const useStore = useContext()
 
   const [ctxMenu, setCtxMenu] = useState<ContextMenuClick>({ open: false });
   const [plusButton, setPlusButton] = React.useState<null | HTMLElement>(null);
@@ -46,7 +46,7 @@ export default function Graph() {
   const flow = useReactFlow();
   const theme = useTheme();
 
-  // const resumeTemporal = useTemporalStore((state) => state.resume);
+  const resumeTemporal = useTemporalStore(useStore, (state) => state.resume);
   const numberOfNodes = useStore((state) => state.nodes.length);
   const nodes = useStore((state) => state.nodes);
   const edges = useStore((state) => state.edges);
@@ -232,9 +232,9 @@ export default function Graph() {
     (instance) => {
       instance.fitView();
       setIsLoading(false);
-      // resumeTemporal();
+      resumeTemporal();
     },
-    [setIsLoading] //[resumeTemporal, setIsLoading]
+    [resumeTemporal, setIsLoading]
   );
 
   const onContextMenu = (

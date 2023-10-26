@@ -251,8 +251,6 @@ export const canvasCenter = (useStore: UseBoundStore<StoreApi<State>>) => {
 
 
 export const useTemporalStore = <T>(
-  useStore: UseBoundStoreWithEqualityFn<Write<Write<StoreApi<State>, {
-    temporal: StoreApi<TemporalState<ZundoState>>;
-}>, StorePersist<State, PersistState>>>,
+  useStore:  ReturnType<typeof useComponentStore>,
   selector: (state: TemporalState<ZundoState>) => T
-) => wrapStore(temporalStore, selector);
+) => wrapStore(useStore.temporal, selector);

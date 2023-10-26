@@ -39,7 +39,7 @@ interface ArguemapperArgs {
   persist?: boolean;
 }
 
-export const StoreContext = createContext<undefined | UseBoundStore<StoreApi<State>>>(undefined);
+export const StoreContext = createContext<undefined |  ReturnType<typeof useComponentStore>>(undefined);
 
 
 const Layout: React.FC<ArguemapperArgs> = ({width, height, sidebarWidth, persist = false}) => {
