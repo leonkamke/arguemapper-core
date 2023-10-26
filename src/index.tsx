@@ -2,17 +2,10 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
-import { ConfirmProvider } from "material-ui-confirm";
-import { SnackbarProvider } from "notistack";
+
 import React from "react";
-import CacheBuster from "react-cache-buster";
 import { createRoot } from "react-dom/client";
-import { ReactFlowProvider } from "reactflow";
-import { version as npmVersion } from "../package.json";
-import ErrorBoundary from "./components/ErrorBoundary.js";
 import "./style.css";
-import theme from "./theme.js";
 import { Arguemapper } from "./App.js";
 
 

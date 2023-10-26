@@ -3,14 +3,14 @@ import * as arguebuf from "arguebuf";
 import { toJpeg, toPng } from "html-to-image";
 import { Options as ImgOptions } from "html-to-image/lib/types.js";
 import * as model from "../model.js";
-import { useContext } from "../store.js";
+import { State, useContext } from "../store.js";
 
 export function importGraph(obj: JsonObject): model.Wrapper {
   return model.fromArguebuf(arguebuf.load.json(obj));
 }
 export function exportGraph(
   obj: model.Wrapper,
-  format: "aif" | "arguebuf"
+  format: "aif" | "arguebuf",
 ): JsonObject {
   const useStore = useContext();
 

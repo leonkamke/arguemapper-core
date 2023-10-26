@@ -1,6 +1,7 @@
 {
   "name": "arguemapper",
   "version": "2.0.0-dev.3",
+  "main": "index.tsx",
   "private": true,
   "type": "module",
   "dependencies": {

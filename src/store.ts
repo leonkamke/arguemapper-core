@@ -3,14 +3,14 @@ import { dequal } from "dequal";
 import { throttle } from "lodash";
 import type { TemporalState, ZundoOptions } from "zundo";
 import { temporal } from "zundo";
-import { UseBoundStore, create, StoreApi, useStore as wrapStore } from "zustand";
+import { UseBoundStore, StoreApi, useStore as wrapStore } from "zustand";
 import {
   PersistOptions,
   PersistStorage,
   StorageValue,
   persist,
 } from "zustand/middleware";
-import { UseBoundStoreWithEqualityFn, useStoreWithEqualityFn, createWithEqualityFn } from "zustand/traditional";
+import { createWithEqualityFn } from "zustand/traditional";
 import * as model from "./model.js";
 import * as convert from "./services/convert.js";
 import {useContext as reactUseContext} from "react";

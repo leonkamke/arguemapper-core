@@ -7,9 +7,9 @@ import Header from "./components/Header.js";
 import Inspector from "./components/Inspector.js";
 import Resources from "./components/Resources.js";
 // import Sidebar from "./components/Sidebar.js";
-import { initialState, State, useContext } from "./store.js";
+import { useContext } from "./store.js";
 
-import React, { ReactNode, createContext } from "react";
+import React, { createContext } from "react";
 //import "@fontsource/roboto/300.css";
 //import "@fontsource/roboto/400.css";
 //import "@fontsource/roboto/500.css";
@@ -19,13 +19,13 @@ import Paper from '@mui/material/Paper';
 import { ConfirmProvider } from "material-ui-confirm";
 import { SnackbarProvider } from "notistack";
 import CacheBuster from "react-cache-buster";
-import { createRoot } from "react-dom/client";
+// import { createRoot } from "react-dom/client";
 import { ReactFlowProvider } from "reactflow";
 import { version as npmVersion } from "../package.json";
 import ErrorBoundary from "./components/ErrorBoundary.js";
 import "./style.css";
 import theme from "./theme.js";
-import {StoreApi, create, UseBoundStore} from "zustand";
+// import {StoreApi, create, UseBoundStore} from "zustand";
 import {useComponentStore} from "./store.js";
 
 
