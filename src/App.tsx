@@ -32,7 +32,7 @@ import {useComponentStore} from "./store.js";
 // https://dev.to/maciejtrzcinski/100vh-problem-with-ios-safari-3ge9
 
 // Properties for arguemapper-core
-interface ArguemapperArgs {
+type ArguemapperArgs = {
   width?: number;
   height?: number;
   sidebarWidth?: number;
@@ -106,12 +106,12 @@ const Layout: React.FC<ArguemapperArgs> = ({width, height, sidebarWidth, persist
 }
 
 
-export const Arguemapper: React.FC<ArguemapperArgs> = ({width = 1000, height = 400, sidebarWidth = 300}) => {
+export const Arguemapper: React.FC<ArguemapperArgs> = ({width = 1000, height = 400, sidebarWidth = 300, persist=true}) => {
   // https://stackoverflow.com/a/58936230
   // const query = window.matchMedia("(prefers-color-scheme: dark)");
   // const [darkMode, setDarkMode] = useState(query.matches);
   // query.addEventListener("change", (e) => setDarkMode(e.matches));
-  const useStore = useComponentStore();
+  const useStore = useComponentStore(persist);
 
   const darkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const isProduction = process.env.NODE_ENV === "production";

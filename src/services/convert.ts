@@ -3,7 +3,7 @@ import * as arguebuf from "arguebuf";
 import { toJpeg, toPng } from "html-to-image";
 import { Options as ImgOptions } from "html-to-image/lib/types.js";
 import * as model from "../model.js";
-import { useContext } from "../store.js";
+import { State} from "../store.js";
 
 export function importGraph(obj: JsonObject): model.Wrapper {
   return model.fromArguebuf(arguebuf.load.json(obj));
@@ -11,11 +11,12 @@ export function importGraph(obj: JsonObject): model.Wrapper {
 export function exportGraph(
   obj: model.Wrapper,
   format: "aif" | "arguebuf",
+  analyst: arguebuf.Analyst | undefined,
 ): JsonObject {
-  const useStore = useContext();
-
+  // const useStore = useContext();
+  
   const graph = model.toArguebuf(obj);
-  const currentAnalyst = useStore.getState().analyst;
+  const currentAnalyst = analyst === undefined? graph.analysts[0] : analyst
 
   if (
     format === "arguebuf" &&
@@ -43,10 +44,9 @@ export function generateFilename() {
 }
 
 // https://stackoverflow.com/a/55613750/7626878
-export async function downloadJson(data: any) {
-  const useStore = useContext();
+export async function downloadJson(data: any, state: State) {
 
-  const prettify = useStore.getState().prettifyJson;
+  const prettify = state.prettifyJson;
   const json = JSON.stringify(data, undefined, prettify ? 2 : undefined);
   const blob = new Blob([json], { type: "application/json" });
   downloadBlob(blob, ".json");
@@ -58,8 +58,8 @@ export async function downloadBlob(data: Blob, suffix: string) {
   downloadFile(href, filename);
 }
 
-export const downloadImage = async (format: ImgFormat) => {
-  const useStore = useContext();
+export const downloadImage = async (format: ImgFormat, imageScale: number) => {
+  // const useStore = useContext();
 
   const selectors = ["#react-flow"];
   const excludedClasses = [
@@ -78,7 +78,7 @@ export const downloadImage = async (format: ImgFormat) => {
       backgroundColor: "white",
       cacheBust: true,
       quality: 1.0,
-      pixelRatio: useStore.getState().imageScale,
+      pixelRatio: imageScale,
       // https://github.com/bubkoo/html-to-image/blob/master/README.md#filter
       filter: (domNode: HTMLElement) => {
         const classList = domNode.classList

@@ -40,7 +40,7 @@ const Resources: React.FC<Props> = () => {
   const activeTab = useStore((state) => state.selectedResource);
   const setActiveTab = useCallback((value: string) => {
     useStore.setState({ selectedResource: value });
-  }, []);
+  }, [useStore]);
 
   const handleTabChange = useCallback(
     (_event: React.SyntheticEvent, newValue: string) => {

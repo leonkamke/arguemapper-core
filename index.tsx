@@ -1,1 +1,1 @@
-export {Arguemapper} from "./src/App.js"
+export {Arguemapper} from "./src/App"

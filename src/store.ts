@@ -102,7 +102,8 @@ const storage: PersistStorage<PersistState> = {
     const { nodes, edges, graph } = state;
     const serializedGraph = convert.exportGraph(
       { nodes, edges, graph },
-      "arguebuf"
+      "arguebuf",
+      state.analyst
     );
 
     const serializedState: StorageValue<SerializedState> = {
@@ -195,17 +196,30 @@ export const initialState: State = {
 
 // useStore.temporal.getState().pause();
 
-export const useComponentStore = () => {
-  const store = createWithEqualityFn<State>() (
+export const useComponentStore = (per: boolean) => {
+  if (persist) {
+    const store = createWithEqualityFn<State>() (
     
-    temporal(
-      persist(() => initialState, persistOptions),
-      temporalOptions
-  ));
-  //() => initialState
-  store.temporal.getState().pause();
-
-  return store;
+      temporal(
+        persist(() => initialState, persistOptions),
+        temporalOptions
+    ));
+    //() => initialState
+    store.temporal.getState().pause();
+  
+    return store;
+  } else {
+    const store = createWithEqualityFn<State>() (
+    
+      temporal(
+        () => initialState,
+        temporalOptions
+    ));
+    //() => initialState
+    store.temporal.getState().pause();
+  
+    return store;
+  }
 
 
 }

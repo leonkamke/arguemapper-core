@@ -126,7 +126,7 @@ export const GraphFields: React.FC<Props> = () => {
     "mod+s",
     () => {
       verifyAnalyst(() => {
-        convert.downloadJson(convert.exportGraph(getWrapper(), "arguebuf"));
+        convert.downloadJson(convert.exportGraph(getWrapper(), "arguebuf", useStore.getState().analyst), useStore.getState());
       });
     },
     { preventDefault: true }
@@ -207,7 +207,8 @@ export const GraphFields: React.FC<Props> = () => {
                 onClick={() => {
                   verifyAnalyst(() => {
                     convert.downloadJson(
-                      convert.exportGraph(getWrapper(), "arguebuf")
+                      convert.exportGraph(getWrapper(), "arguebuf", useStore.getState().analyst),
+                      useStore.getState()
                     );
                   });
                 }}
@@ -220,7 +221,8 @@ export const GraphFields: React.FC<Props> = () => {
                 onClick={() => {
                   verifyAnalyst(() => {
                     convert.downloadJson(
-                      convert.exportGraph(getWrapper(), "aif")
+                      convert.exportGraph(getWrapper(), "aif", useStore.getState().analyst),
+                      useStore.getState()
                     );
                   });
                 }}
@@ -232,7 +234,7 @@ export const GraphFields: React.FC<Props> = () => {
                 variant="contained"
                 onClick={() => {
                   flow.fitView();
-                  convert.downloadImage(convert.ImgFormat.PNG);
+                  convert.downloadImage(convert.ImgFormat.PNG, useStore.getState().imageScale);
                 }}
               >
                 PNG
@@ -242,7 +244,7 @@ export const GraphFields: React.FC<Props> = () => {
                 variant="contained"
                 onClick={() => {
                   flow.fitView();
-                  convert.downloadImage(convert.ImgFormat.JPG);
+                  convert.downloadImage(convert.ImgFormat.JPG, useStore.getState().imageScale);
                 }}
               >
                 JPG
