@@ -85,7 +85,7 @@ export const GraphFields: React.FC<Props> = () => {
       edges: state.edges,
       graph: state.graph,
     };
-  }, []);
+  }, [useStore]);
 
   const upload: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (event) => {
@@ -102,7 +102,7 @@ export const GraphFields: React.FC<Props> = () => {
         reader.readAsText(event.target.files[0]);
       }
     },
-    []
+    [useStore]
   );
 
   const verifyAnalyst = useCallback(

@@ -42,7 +42,7 @@ export default function Graph() {
 
   const [ctxMenu, setCtxMenu] = useState<ContextMenuClick>({ open: false });
   const [plusButton, setPlusButton] = React.useState<null | HTMLElement>(null);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+ // const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const flow = useReactFlow();
   const theme = useTheme();
 
@@ -53,20 +53,21 @@ export default function Graph() {
   const firstVisit = useStore((state) => state.firstVisit);
   const disableFirstVisit = useCallback(() => {
     useStore.setState({ firstVisit: false });
-  }, []);
+  }, [useStore]);
   // const isLoading = useStore((state) => state.isLoading);
   const setIsLoading = useCallback((value: boolean) => {
     useStore.setState({ isLoading: value });
-  }, []);
+  }, [useStore]);
   const shouldLayout = useStore((state) => state.shouldLayout);
   const edgeStyle = useStore((state) => state.edgeStyle);
   const setShouldLayout = useCallback((value: boolean) => {
     useStore.setState({ shouldLayout: value });
-  }, []);
+  }, [useStore]);
   const [shouldFit, setShouldFit] = useState(false);
   const onlyRenderVisibleElements = numberOfNodes > 100;
   const layoutAlgorithm = useStore((state) => state.layoutAlgorithm);
 
+  /*
   const snackbarAction: SnackbarAction = useCallback(
     (key: SnackbarKey) => (
       <Stack direction="row" spacing={1}>
@@ -108,6 +109,7 @@ export default function Graph() {
       );
     }
   }, [enqueueSnackbar, firstVisit, flow, snackbarAction]);
+  */
 
   useEffect(() => {
     if (shouldFit) {
@@ -146,6 +148,7 @@ export default function Graph() {
       });
     }
   }, [
+    useStore,
     setShouldFit,
     shouldLayout,
     setIsLoading,
@@ -158,11 +161,11 @@ export default function Graph() {
 
   const onNodesChange: OnNodesChange = useCallback((changes) => {
     useStore.setState((state) => ({ nodes: applyNodeChanges(changes, state.nodes) }));
-  }, []);
+  }, [useStore]);
 
   const onEdgesChange: OnEdgesChange = useCallback((changes) => {
     useStore.setState((state) => ({ edges: applyEdgeChanges(changes, state.edges) }));
-  }, []);
+  }, [useStore]);
 
   const onConnect: OnConnect = useCallback((connection) => {
     useStore.setState(
@@ -204,7 +207,7 @@ export default function Graph() {
         }
       })
     );
-  }, []);
+  }, [useStore]);
 
   const onNodesDelete: OnNodesDelete = useCallback((deletedNodes) => {
     const deletedNodeIds = deletedNodes.map((node) => node.id);
@@ -219,14 +222,14 @@ export default function Graph() {
       ),
       selection: model.initSelection(),
     }));
-  }, []);
+  }, [useStore]);
   const onEdgesDelete: OnEdgesDelete = useCallback((deletedEdges) => {
     const deletedEdgeIds = deletedEdges.map((edge) => edge.id);
     useStore.setState((state) => ({
       edges: state.edges.filter((edge) => !deletedEdgeIds.includes(edge.id)),
       selection: model.initSelection(),
     }));
-  }, []);
+  }, [useStore]);
 
   const onInit: OnInit = useCallback(
     (instance) => {
@@ -271,14 +274,14 @@ export default function Graph() {
           },
         };
       }),
-    []
+    [useStore]
   );
 
   const onElementClick = useCallback(
     (event: React.MouseEvent, elem: model.Node | model.Edge) => {
       useStore.setState({ rightSidebarOpen: true });
     },
-    []
+    [useStore]
   );
 
   const onClickConnectStart: OnConnectStart = useCallback((event, params) => {
@@ -292,7 +295,7 @@ export default function Graph() {
         }
       })
     );
-  }, []);
+  }, [useStore]);
 
   const onClickConnectEnd: OnConnectEnd = useCallback(() => {
     useStore.setState(
@@ -302,7 +305,7 @@ export default function Graph() {
           .forEach((node) => delete node.data.userdata.clickConnect);
       })
     );
-  }, []);
+  }, [useStore]);
 
   const connectionLineType: ConnectionLineType = useMemo(() => {
     switch (edgeStyle) {

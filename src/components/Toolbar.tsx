@@ -46,7 +46,7 @@ export const Toolbar: React.FC<ToolbarProps> = () => {
   const redoable = futureStates.length > 0;
   const setShouldLayout = useCallback((value: boolean) => {
     useStore.setState({ shouldLayout: value });
-  }, []);
+  }, [useStore]);
   const flow = useReactFlow();
 
   const onLayout = useCallback(() => {

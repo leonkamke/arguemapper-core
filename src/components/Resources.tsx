@@ -59,7 +59,7 @@ const Resources: React.FC<Props> = () => {
         );
       })
     );
-  }, []);
+  }, [useStore]);
 
   const lastResourceIndex = useMemo(
     () => (resourceIds.length + 1).toString(),
@@ -197,7 +197,7 @@ const Resource: React.FC<ResourceProps> = ({ id, index, references }) => {
         callback(start, end);
       });
     },
-    [id, references, selection]
+    [useStore, id, references, selection]
   );
 
   const onChange = useCallback(
@@ -216,7 +216,7 @@ const Resource: React.FC<ResourceProps> = ({ id, index, references }) => {
         );
       }
     },
-    [id, resourceText]
+    [useStore, id, resourceText]
   );
 
   const addAtom = useCallback(() => {
@@ -241,7 +241,7 @@ const Resource: React.FC<ResourceProps> = ({ id, index, references }) => {
         draft.nodes.push(node);
       })
     );
-  }, [resourceText, userSelection, id, flow]);
+  }, [useStore, resourceText, userSelection, id, flow]);
 
   const deleteResource = useCallback(() => {
     useStore.setState(
@@ -249,7 +249,7 @@ const Resource: React.FC<ResourceProps> = ({ id, index, references }) => {
         delete draft.graph.resources[id];
       })
     );
-  }, [id]);
+  }, [useStore, id]);
 
   return (
     <Stack spacing={2}>

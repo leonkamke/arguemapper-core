@@ -41,7 +41,7 @@ const Inspector: React.FC<Props> = ({ close }) => {
       ),
       selection: model.initSelection(),
     }));
-  }, []);
+  }, [useStore]);
 
   return (
     <>

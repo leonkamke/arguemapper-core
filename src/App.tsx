@@ -7,7 +7,7 @@ import Header from "./components/Header.js";
 import Inspector from "./components/Inspector.js";
 import Resources from "./components/Resources.js";
 // import Sidebar from "./components/Sidebar.js";
-import { useContext } from "./store.js";
+import { initialState, useContext } from "./store.js";
 
 import React, { createContext } from "react";
 //import "@fontsource/roboto/300.css";
@@ -63,7 +63,7 @@ const Layout: React.FC<ArguemapperArgs> = ({width, height, sidebarWidth, persist
 
   useEffect(() => {
     useStore.setState({ leftSidebarOpen: !isMobile, rightSidebarOpen: !isMobile });
-  }, [isMobile]);
+  }, [isMobile, useStore]);
 
   const setLeftSidebarOpen = (value: boolean) => {
     useStore.setState({ leftSidebarOpen: value });
@@ -112,7 +112,9 @@ export const Arguemapper: React.FC<ArguemapperArgs> = ({width = 1000, height = 4
   // const [darkMode, setDarkMode] = useState(query.matches);
   // query.addEventListener("change", (e) => setDarkMode(e.matches));
   const useStore = useComponentStore(persist);
-
+  if (!persist) {
+    useStore.setState(initialState);
+  }
   const darkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const isProduction = process.env.NODE_ENV === "production";
 
