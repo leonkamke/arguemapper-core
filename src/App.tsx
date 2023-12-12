@@ -26,7 +26,10 @@ import ErrorBoundary from "./components/ErrorBoundary.js";
 import "./style.css";
 import theme from "./theme.js";
 // import {StoreApi, create, UseBoundStore} from "zustand";
-import {useComponentStore} from "./store.js";
+import {useComponentStore, resetState} from "./store.js";
+import { importGraph } from "./services/convert.js";
+import type { JsonObject } from "arguebuf";
+
 
 
 // https://dev.to/maciejtrzcinski/100vh-problem-with-ios-safari-3ge9
@@ -37,12 +40,13 @@ type ArguemapperArgs = {
   height?: number;
   sidebarWidth?: number;
   persist?: boolean;
-}
+  graph?: JsonObject | undefined 
+};
 
 export const StoreContext = createContext<undefined |  ReturnType<typeof useComponentStore>>(undefined);
 
 
-const Layout: React.FC<ArguemapperArgs> = ({width, height, sidebarWidth, persist = false}) => {
+const Layout: React.FC<ArguemapperArgs> = ({width, height, sidebarWidth}) => {
   // const sidebarWidth = useStore((state) => state.sidebarWidth);
   /*
   const useStore = create<State>()(
@@ -53,6 +57,7 @@ const Layout: React.FC<ArguemapperArgs> = ({width, height, sidebarWidth, persist
   */
 
   const useStore = useContext();
+  
   // const useStore = store.setState;
 
   const isMobile = useMediaQuery(useTheme().breakpoints.down("md"));
@@ -106,7 +111,7 @@ const Layout: React.FC<ArguemapperArgs> = ({width, height, sidebarWidth, persist
 }
 
 
-export const Arguemapper: React.FC<ArguemapperArgs> = ({width = 1000, height = 400, sidebarWidth = 300, persist=true}) => {
+export const Arguemapper: React.FC<ArguemapperArgs> = ({width = 1000, height = 400, sidebarWidth = 300, persist=true, graph=undefined}) => {
   // https://stackoverflow.com/a/58936230
   // const query = window.matchMedia("(prefers-color-scheme: dark)");
   // const [darkMode, setDarkMode] = useState(query.matches);
@@ -114,6 +119,9 @@ export const Arguemapper: React.FC<ArguemapperArgs> = ({width = 1000, height = 4
   const useStore = useComponentStore(persist);
   if (!persist) {
     useStore.setState(initialState);
+  }
+  if (graph !== undefined) {
+    resetState(useStore, importGraph(graph));
   }
   const darkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const isProduction = process.env.NODE_ENV === "production";
@@ -141,7 +149,7 @@ export const Arguemapper: React.FC<ArguemapperArgs> = ({width = 1000, height = 4
             <ErrorBoundary>
               <ReactFlowProvider>
                 <StoreContext.Provider value={useStore}>
-                  <Layout width={width} height={height} sidebarWidth={sidebarWidth}/>
+                  <Layout width={width} height={height} sidebarWidth={sidebarWidth} graph={graph}/>
                 </StoreContext.Provider>
               </ReactFlowProvider>
             </ErrorBoundary>

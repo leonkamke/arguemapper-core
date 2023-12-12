@@ -1,8 +1,8 @@
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, IconButton, Stack, useTheme } from "@mui/material";
+//import { faXmark } from "@fortawesome/free-solid-svg-icons";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTheme } from "@mui/material";
 import { produce } from "immer";
-import { SnackbarAction, SnackbarKey, useSnackbar } from "notistack";
+// import { SnackbarAction, SnackbarKey, useSnackbar } from "notistack";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ConnectionLineType,
@@ -22,11 +22,10 @@ import {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import * as model from "../model.js";
-import { generateDemo } from "../services/demo.js";
+// import { generateDemo } from "../services/demo.js";
 import { layout } from "../services/layout.js";
 import {
   State,
-  resetState,
   useContext,
   useTemporalStore,
 } from "../store.js";
@@ -50,10 +49,12 @@ export default function Graph() {
   const numberOfNodes = useStore((state) => state.nodes.length);
   const nodes = useStore((state) => state.nodes);
   const edges = useStore((state) => state.edges);
+  /*
   const firstVisit = useStore((state) => state.firstVisit);
   const disableFirstVisit = useCallback(() => {
     useStore.setState({ firstVisit: false });
   }, [useStore]);
+  */
   // const isLoading = useStore((state) => state.isLoading);
   const setIsLoading = useCallback((value: boolean) => {
     useStore.setState({ isLoading: value });
